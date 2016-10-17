@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit2016.guestbook.dao.GuestbookDao;
 import com.bit2016.guestbook.vo.GuestbookVo;
 import com.bit2016.web.Action;
+import com.bit2016.web.util.WebUtil;
 
-public class Delete implements Action {
+public class DeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +26,7 @@ public class Delete implements Action {
 		GuestbookDao dao = new GuestbookDao();
 		dao.delete(vo);
 		
-		response.sendRedirect("/guestbook2/gs");
+		WebUtil.redirect(request,response,"/guestbook2/gs");
 		
 	}
 

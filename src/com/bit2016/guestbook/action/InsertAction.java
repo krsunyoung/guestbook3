@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit2016.guestbook.dao.GuestbookDao;
 import com.bit2016.guestbook.vo.GuestbookVo;
 import com.bit2016.web.Action;
+import com.bit2016.web.util.WebUtil;
 
 public class InsertAction implements Action {
 
@@ -27,7 +28,7 @@ public class InsertAction implements Action {
 		dao.insert(vo);
 		
 		//자신에게 request
-		response.sendRedirect("/guestbook2/gs");
+		WebUtil.redirect(request,response,"/guestbook2/gs");
 		
 	}
 

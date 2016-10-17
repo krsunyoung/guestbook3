@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.bit2016.guestbook.dao.GuestbookDao;
 import com.bit2016.guestbook.vo.GuestbookVo;
 import com.bit2016.web.Action;
+import com.bit2016.web.util.WebUtil;
 
 public class ListAction implements Action {
 
@@ -23,10 +24,10 @@ public class ListAction implements Action {
 		//request 범위 모델데이터 저장
 		request.setAttribute("list", list);
 
-		
+		WebUtil.forward(request, response, "/WEB-INF/views/index.jsp");
 		//forwarding(request 연장, request dispatch)
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
-		rd.forward(request, response); //Attribute(list)가 request 로 온다. 그안에 저장시킴. 
+//		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
+//		rd.forward(request, response); //Attribute(list)가 request 로 온다. 그안에 저장시킴. 
 		//집어 넣을때 setAttribute 뺄때 getAttribute
 	}
 
