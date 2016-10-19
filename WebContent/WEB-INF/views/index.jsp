@@ -1,11 +1,11 @@
-<%@page import="com.bit2016.guestbook.vo.GuestbookVo"%>
-<%@page import="java.util.List"%>
-<%@page import="com.bit2016.guestbook.dao.GuestbookDao"%>
-<%@page import="java.sql.Connection"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-	List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	pageContext.setAttribute("newLine", "\n");
 %>
 <html>
 <head>
@@ -14,41 +14,41 @@
 </head>
 <body>
 	<form action="/guestbook2/gs" method="post">
-	<table border=1 width=500>
-		<tr>	
-			<td>이름</td><td><input type="text" name="name"></td>
-			<td>비밀번호</td><td><input type="password" name="password"></td>
-		</tr>
-		<tr>
-			<td colspan=4><textarea name="content" cols=60 rows=5></textarea></td>
-		</tr>
-		<tr>
-			<td colspan=4 align=right>
-			<input type ="hidden" name ="a" value="insert">
-			<input type="submit" VALUE=" 확인 "></td>
-		</tr>
-	</table>
+		<table border=1 width=500>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" name="name"></td>
+				<td>비밀번호</td>
+				<td><input type="password" name="password"></td>
+			</tr>
+			<tr>
+				<td colspan=4><textarea name="content" cols=60 rows=5></textarea></td>
+			</tr>
+			<tr>
+				<td colspan=4 align=right><input type="hidden" name="a"
+					value="insert"> <input type="submit" VALUE=" 확인 "></td>
+			</tr>
+		</table>
 	</form>
+	<c:set var="count" value="${fn:length(list) }"/>
+	<c:forEach items="${list }" var="vo" varStatus="status">
 	<br>
-		<%
-		int count=-1;
-		for(GuestbookVo vo : list){
-			count++;
-		%>
-	<table width=510 border=1>
-		<tr>
-			<td>[<%=list.size() - count %>]</td>
-			<td><%=vo.getName() %></td>
-			<td><%=vo.getReq_date() %></td>
-			<td><a href="/guestbook2/gs?a=deleteform&no=<%=vo.getNo()%>" >삭제</a></td>
-		</tr>
-		<tr>
-			<td colspan=4><%=vo.getContent().replace("\n", "<br/>")%></td>
-		</tr>
-	</table>
-	<br>
-						
-		<% } %>
-	
+		<table width=510 border=1>
+			<tr>
+				<td>[${count - status.index }]</td>
+				<td>${vo.name }</td>
+				<td>${vo.reqDate }</td>
+				<td><a href="/guestbook2/gs?a=deleteform&no=${vo.no }">삭제</a></td>
+			</tr>
+			<tr>
+				<td colspan=4>
+					${fn:replace(vo.content, newLine ,"<br>") }
+				</td>
+				<!-- <%//=vo.getContent().replace("\n", "<br/>")%> -->
+			</tr>
+		</table>
+		<br>
+	</c:forEach>
+
 </body>
 </html>
